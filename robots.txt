@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://snizulik.github.io/kachmar-studio/sitemap.xml
+Sitemap: https://snizulik.github.io/Kachmar.Studio/sitemap.xml
