@@ -91,9 +91,54 @@ header{background:rgba(18,17,15,.78)}
 .tile.big{background:linear-gradient(145deg,#1b1916 0%,#11100e 65%)}
 .tile.violet{background:linear-gradient(145deg,#211d22,#121112)}
 .process .step:hover{background:#211f1b}
-.contact{background:linear-gradient(145deg,#211f1b,#151411)}
-.form input,.form select,.form textarea{background:#1b1916;border-color:#35322b}
+.contact{background:linear-gradient(145deg,#28251f 0%,#1c1a16 100%);border-color:rgba(216,255,63,.22);box-shadow:inset 0 1px 0 rgba(255,255,255,.035),0 20px 70px rgba(0,0,0,.14)}
+.form input,.form select,.form textarea{background:#211f1b;border-color:#403c33;box-shadow:inset 0 1px 0 rgba(255,255,255,.02)}.form input:focus,.form select:focus,.form textarea:focus{border-color:rgba(216,255,63,.48);box-shadow:0 0 0 3px rgba(216,255,63,.055),inset 0 1px 0 rgba(255,255,255,.025)}.file-button{background:rgba(216,255,63,.075);border-color:rgba(216,255,63,.24)}.file-button:hover{background:rgba(216,255,63,.12);border-color:rgba(216,255,63,.38)}
 .file-button{background:#1d1b18;border-color:#403c33}
+
+/* ACID FORMS - selective lime surfaces */
+.service:nth-child(2),
+.service:nth-child(4){
+  background:linear-gradient(145deg,#26301f 0%,#20271c 55%,#1c2119 100%);
+  border-color:#536332!important;
+}
+.service:nth-child(2) .top,.service:nth-child(4) .top{color:#9eaa7b}
+.service:nth-child(2) .symbol,.service:nth-child(4) .symbol{color:#d1e86a}
+.service:nth-child(2) p,.service:nth-child(4) p{color:#aeb69a}
+.service:nth-child(2):after,.service:nth-child(4):after{background:radial-gradient(circle,#c7ef4b,transparent 68%);opacity:.24}
+.service:nth-child(2):hover,.service:nth-child(4):hover{background:linear-gradient(145deg,#2d3823,#242d20);border-color:#71883b!important}
+
+.step:nth-child(3){
+  background:linear-gradient(145deg,#252d1d,#20261b);
+  border-color:#4d5c2f!important;
+}
+.step:nth-child(3) .n,.step:nth-child(3):after{color:#c8e85b}
+.step:nth-child(3):hover{background:linear-gradient(145deg,#2d3822,#252d1f)!important;border-color:#71883b!important}
+
+.price:nth-child(2) .tag,.price:nth-child(4) .tag{
+  display:inline-flex;justify-content:center;align-items:center;
+  padding:8px 12px;border-radius:999px;
+  background:#2d371f;color:#c9e965;border:1px solid #566735;
+}
+
+.file-button{background:#27301e;border-color:#4f6030;color:#c8df79}
+.file-button:hover{background:#303b22;border-color:#70853d}
+
+.cta{background:#2d381f!important;color:#d7ee80!important;border-color:#566b31!important}
+.cta:hover{background:#354325!important;box-shadow:0 12px 40px rgba(180,220,60,.12)}
+
+@media(max-width:560px){
+ .price:nth-child(2) .tag,.price:nth-child(4) .tag{justify-content:flex-start;width:max-content}
+}
+
+/* success modal */
+.success-modal{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;background:rgba(10,10,8,.68);backdrop-filter:blur(12px);opacity:0;pointer-events:none;transition:opacity .35s ease}
+.success-modal.show{opacity:1;pointer-events:auto}
+.success-box{position:relative;width:min(440px,calc(100% - 36px));padding:44px 38px 38px;border:1px solid rgba(216,255,63,.28);border-radius:28px;background:linear-gradient(145deg,#2d2a24,#211f1b);box-shadow:0 30px 100px rgba(0,0,0,.45),0 0 70px rgba(216,255,63,.07);text-align:center;transform:translateY(18px) scale(.97);transition:transform .45s cubic-bezier(.2,.8,.2,1)}
+.success-modal.show .success-box{transform:none}
+.success-icon{width:62px;height:62px;margin:0 auto 22px;border-radius:50%;display:grid;place-items:center;background:rgba(216,255,63,.13);border:1px solid rgba(216,255,63,.45);color:var(--acid);font-size:27px;box-shadow:0 0 35px rgba(216,255,63,.12)}
+.success-box h3{margin:0 0 10px;font-size:32px;letter-spacing:-.045em}.success-box p{margin:0 auto;color:#bdb6aa;line-height:1.65;max-width:330px;font-size:14px}.success-close{margin-top:25px;border:1px solid rgba(216,255,63,.28);background:rgba(216,255,63,.08);color:#e9eadf;border-radius:999px;padding:11px 20px;font:inherit;cursor:pointer}.success-close:hover{background:rgba(216,255,63,.15)}
+.confetti{position:absolute;width:5px;height:13px;border-radius:2px;left:50%;top:50%;opacity:0;animation:confetti 1.15s cubic-bezier(.12,.7,.3,1) forwards}
+@keyframes confetti{0%{opacity:0;transform:translate(-50%,-50%) rotate(0) scale(.4)}12%{opacity:1}100%{opacity:0;transform:translate(calc(-50% + var(--x)),calc(-50% + var(--y))) rotate(var(--r)) scale(1)}}
 </style>
 </head>
 <body><div class="cursor-glow" aria-hidden="true"></div><div class="site-comets" aria-hidden="true"><span class="site-comet ua">UA</span><span class="site-comet cz">CZ</span><span class="site-comet en">EN</span></div><div class="scroll-progress"></div>
@@ -125,5 +170,5 @@ const progress=document.querySelector('.scroll-progress');
 const updateProgress=()=>{const h=document.documentElement.scrollHeight-window.innerHeight;progress.style.width=(h>0?(window.scrollY/h)*100:0)+'%'};window.addEventListener('scroll',updateProgress,{passive:true});updateProgress();
 const hero=document.querySelector('.hero');if(hero){hero.addEventListener('pointermove',e=>{const r=hero.getBoundingClientRect();hero.style.setProperty('--mx',((e.clientX-r.left)/r.width*100)+'%');hero.style.setProperty('--my',((e.clientY-r.top)/r.height*100)+'%')})}
 const cursorGlow=document.querySelector('.cursor-glow');if(cursorGlow){window.addEventListener('pointermove',e=>{cursorGlow.style.transform=`translate3d(${e.clientX-160}px,${e.clientY-160}px,0)`;document.body.classList.add('cursor-active')},{passive:true});window.addEventListener('pointerleave',()=>document.body.classList.remove('cursor-active'));}
-const success=document.getElementById('form-success');if(success&&new URLSearchParams(window.location.search).get('sent')==='1'){success.classList.add('show');history.replaceState({},document.title,window.location.pathname+window.location.hash);setTimeout(()=>success.scrollIntoView({behavior:'smooth',block:'center'}),150);}
-</script></body></html>
+const success=document.getElementById('form-success');const successModal=document.getElementById('success-modal');const successClose=document.getElementById('success-close');function launchConfetti(){if(!successModal)return;for(let i=0;i<28;i++){const c=document.createElement('i');c.className='confetti';c.style.setProperty('--x',(Math.random()*360-180)+'px');c.style.setProperty('--y',(Math.random()*260-190)+'px');c.style.setProperty('--r',(Math.random()*540-270)+'deg');c.style.background=['#d8ff3f','#b7dc32','#7f9628','#e5e7d9'][i%4];c.style.animationDelay=(Math.random()*.18)+'s';successModal.appendChild(c);setTimeout(()=>c.remove(),1500)}}function openSuccess(){if(!successModal)return;successModal.classList.add('show');successModal.setAttribute('aria-hidden','false');launchConfetti()}function closeSuccess(){if(!successModal)return;successModal.classList.remove('show');successModal.setAttribute('aria-hidden','true')}if(success&&new URLSearchParams(window.location.search).get('sent')==='1'){success.classList.add('show');history.replaceState({},document.title,window.location.pathname+window.location.hash);setTimeout(openSuccess,180)}if(successClose)successClose.addEventListener('click',closeSuccess);if(successModal)successModal.addEventListener('click',e=>{if(e.target===successModal)closeSuccess()});document.addEventListener('keydown',e=>{if(e.key==='Escape')closeSuccess()});
+</script><div class="success-modal" id="success-modal" aria-hidden="true"><div class="success-box"><div class="success-icon">✓</div><h3><span data-lang="ua">Запит надіслано</span><span data-lang="cz">Poptávka odeslána</span><span data-lang="en">Request sent</span></h3><p><span data-lang="ua">Дякуємо! Ми отримали ваш запит і скоро повернемося з відповіддю.</span><span data-lang="cz">Děkujeme! Vaši poptávku jsme obdrželi a brzy se ozveme.</span><span data-lang="en">Thank you! We received your request and will get back to you soon.</span></p><button class="success-close" id="success-close" type="button"><span data-lang="ua">Готово</span><span data-lang="cz">Hotovo</span><span data-lang="en">Done</span></button></div></div></body></html>
