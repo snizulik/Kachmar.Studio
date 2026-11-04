@@ -347,7 +347,7 @@ footer a{color:var(--ink);margin-right:20px;text-decoration:none}footer a:hover{
 <form id="f" class="rv">
 <div class="f2"><label class="ff"><span data-i="fn"></span><input name="name" required autocomplete="name"></label>
 <label class="ff">Email<input name="email" type="email" required autocomplete="email"></label></div>
-<label class="ff"><span data-i="ft"></span><textarea name="msg" required></textarea></label>
+<label class="ff"><span data-i="ft"></span><textarea name="message" required></textarea></label>
 <div><button class="btn mg" type="submit"><span data-i="send"></span> ↗</button></div>
 <div class="ok" id="ok" role="status" data-i="ok"></div>
 </form>
@@ -527,25 +527,62 @@ new IntersectionObserver(function(es){pvis=es[0].isIntersecting;if(pvis)procGo(p
 $("chips").onclick=function(e){var b=e.target.closest("button");if(b)pick(+b.dataset.c)};
 $("cn").oninput=function(){$("rg").value=this.value;calc()};
 $("rg").oninput=function(){$("cn").value=this.value;calc()};
-$("f").onsubmit=async function(e){
- e.preventDefault();
- var form=this,btn=form.querySelector('button[type="submit"]'),status=$("ok"),label=btn.querySelector("span");
- var original=label.textContent;
- btn.disabled=true;label.textContent=["Надсилаємо…","Odesíláme…","Sending…"][L];
- status.style.display="none";
- try{
-  var data=new FormData(form);
-  data.append("_subject","Нова заявка з KACHMAR / STUDIO");
-  data.append("_template","table");
-  data.append("_captcha","false");
-  var response=await fetch("https://formsubmit.co/ajax/snizulik2@gmail.com",{method:"POST",headers:{"Accept":"application/json"},body:data});
-  var result=await response.json();
-  if(!response.ok||(result.success!== "true"&&result.success!==true))throw new Error("Form submission failed");
-  status.textContent=T.ok[L];status.style.display="block";form.reset();
- }catch(err){
-  status.textContent=["Не вдалося надіслати. Спробуйте ще раз або напишіть на email.","Odeslání se nezdařilo. Zkuste to znovu nebo napište e-mail.","Could not send. Please try again or email us."][L];
-  status.style.display="block";
- }finally{btn.disabled=false;label.textContent=original}
+$("f").onsubmit = async function(e) {
+  e.preventDefault();
+
+  var form = this;
+  var btn = form.querySelector('button[type="submit"]');
+  var status = $("ok");
+  var label = btn.querySelector("span");
+  var original = label.textContent;
+
+  btn.disabled = true;
+  label.textContent = ["Надсилаємо…", "Odesíláme…", "Sending…"][L];
+  status.style.display = "none";
+
+  try {
+    var data = new FormData(form);
+    data.append("_subject", "Нова заявка з KACHMAR / STUDIO");
+    data.append("_template", "table");
+    data.append("_captcha", "false");
+
+    var response = await fetch(
+      "https://formsubmit.co/ajax/snizulik2@gmail.com",
+      {
+        method: "POST",
+        headers: { "Accept": "application/json" },
+        body: data
+      }
+    );
+
+    var raw = await response.text();
+    var result;
+
+    try {
+      result = JSON.parse(raw);
+    } catch (parseError) {
+      throw new Error("Сервіс повернув не JSON: " + raw.slice(0, 300));
+    }
+
+    if (!response.ok || result.success !== true && result.success !== "true") {
+      throw new Error(result.message || result.error || "HTTP " + response.status);
+    }
+
+    status.textContent = T.ok[L];
+    status.style.display = "block";
+    form.reset();
+
+  } catch (err) {
+    console.error("Помилка форми:", err);
+    status.textContent =
+      ["Помилка: ", "Chyba: ", "Error: "][L] +
+      (err.message || "Невідома помилка");
+    status.style.display = "block";
+
+  } finally {
+    btn.disabled = false;
+    label.textContent = original;
+  }
 };
 /* scroll: progress bar + header hide */
 var ly=0,hd=$("hd"),pg=$("pg");
